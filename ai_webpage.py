@@ -7,8 +7,8 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the trained model and scaler
-scaler = pickle.load(open('../scaler_parameters.pkl', 'rb'))
-model = pickle.load(open('../player_ratings_model.pkl', 'rb'))
+scaler = pickle.load(open('../new_scaler_parameters.pkl', 'rb'))
+model = pickle.load(open('../new_player_ratings_model.pkl', 'rb'))
 
 
 # Define a route for the homepage
@@ -42,23 +42,20 @@ def predict():
         power_shot_power = float(request.form['power_shot_power'])
         mentality_vision = float(request.form['mentality_vision'])
         mentality_composure = float(request.form['mentality_composure'])
-        rcm = float(request.form['rcm'])
-        cm = float(request.form['cm'])
-        lcm = float(request.form['lcm'])
 
         # Make predictions using the loaded model
         input_data = pd.DataFrame(data=[[potential, value_eur, wage_eur, release_clause_eur, passing, dribbling,
                                          attacking_short_passing, movement_reactions, power_shot_power,
                                          mentality_vision,
-                                         mentality_composure, rcm, cm, lcm]],
+                                         mentality_composure]],
                                   columns=['potential', 'value_eur', 'wage_eur', 'release_clause_eur', 'passing',
                                            'dribbling', 'attacking_short_passing', 'movement_reactions',
                                            'power_shot_power',
-                                           'mentality_vision', 'mentality_composure', 'rcm', 'cm', 'lcm'])
+                                           'mentality_vision', 'mentality_composure'])
 
 
         # Calculate prediction intervals using bootstrapping
-        num_samples = 1000
+        num_samples = 5
         predictions = []
         for i in range(num_samples):
             scaled_input = scaler.transform(input_data)
