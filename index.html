@@ -3,156 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Player Rating Prediction</title>
+    <title>Football Prediction App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
         }
-        form {
-            display: inline-block;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input {
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .prediction_result {
-            display: none;
-        }
     </style>
 </head>
 <body>
-    <h1>Football Player Rating Prediction</h1>
+    <h1>Football Prediction App</h1>
 
-    <form action="/predict" method="post" id="prediction_form">
-        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <div style="margin: 10px;">
-                <label for="potential">Potential:</label>
-                <input type="number" id="potential" name="potential" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="value_eur">Value of player:</label>
-                <input type="number" id="value_eur" name="value_eur" min="0" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="wage_eur">Player salary:</label>
-                <input type="number" id="wage_eur" name="wage_eur" min="0" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="release_clause_eur">Cost of player:</label>
-                <input type="number" id="release_clause_eur" name="release_clause_eur" min="0" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="passing">Passing:</label>
-                <input type="number" id="passing" name="passing" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="dribbling">Dribbling:</label>
-                <input type="number" id="dribbling" name="dribbling" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="attacking_short_passing">Progressive short passes:</label>
-                <input type="number" id="attacking_short_passing" name="attacking_short_passing" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="movement_reactions">Movement reactions:</label>
-                <input type="number" id="movement_reactions" name="movement_reactions" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="power_shot_power">Shot power:</label>
-                <input type="number" id="power_shot_power" name="power_shot_power" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="mentality_vision">Game vision:</label>
-                <input type="number" id="mentality_vision" name="mentality_vision" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="mentality_composure">Mentality composure:</label>
-                <input type="number" id="mentality_composure" name="mentality_composure" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="rcm">Performance as RCM:</label>
-                <input type="number" id="rcm" name="rcm" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="cm">Performance as CM:</label>
-                <input type="number" id="cm" name="cm" min="0" max="100" step="1" required>
-            </div>
-
-            <div style="margin: 10px;">
-                <label for="lcm">Performance as LCM:</label>
-                <input type="number" id="lcm" name="lcm" min="0" max="100" step="1" required>
-            </div>
-        </div>
+    <form action="/predict" method="post">
+        <label for="team">Select your favorite team:</label>
+        <select id="team" name="team">
+            <option value="team1">Team 1</option>
+            <option value="team2">Team 2</option>
+            <!-- Add more options as needed -->
+        </select>
 
         <br><br>
+
+        <label for="prediction">Predict the outcome:</label>
+        <input type="text" id="prediction" name="prediction" placeholder="Enter your prediction...">
+
+        <br><br>
+
         <button type="submit">Predict</button>
     </form>
-
-    <div class="prediction_result">
-        <h1>
-            Prediction Result:
-            <span id="result_value">0</span>%
-        </h1>
-        <h2>
-            Actual Confidence:
-            <span id="actual_confidence">0</span>%
-        </h2>
-    </div>
-
-    <script>
-        // Check if the URL contains prediction results and actual confidence as arguments.
-        // If they are present, display the results.
-
-        var prediction_result = document.getElementById("result_value");
-        var actual_confidence = document.getElementById("actual_confidence");
-
-        const urlParams = new URLSearchParams(window.location.search);
-
-        // Get the prediction_result and actual_confidence parameters
-        const predictionResult = urlParams.get('prediction_result');
-        const actualConfidence = urlParams.get('actual_confidence');
-
-        // Check if the parameters are present and not null
-        if (predictionResult !== null && actualConfidence !== null) {
-            // Convert to floating-point numbers and format to two decimal places
-            const formattedResult = parseFloat(predictionResult).toFixed(2);
-            const formattedConfidence = parseFloat(actualConfidence).toFixed(2);
-
-            // Display the formatted results
-            prediction_result.innerText = formattedResult;
-            actual_confidence.innerText = formattedConfidence;
-
-            var prediction_result_container = document.querySelector(".prediction_result");
-            prediction_result_container.style.display = "block";
-        }
-    </script>
-
 </body>
 </html>
-
